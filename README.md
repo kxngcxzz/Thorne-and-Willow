@@ -3,7 +3,7 @@
 A portfolio build of a marketing site for a fictional landscape gardening
 company working across Surrey and West Sussex.
 
-**Live demo:** https://kxngcxzz.github.io/thorne-and-willow/
+**Live demo:** https://kxngcxzz.github.io/Thorne-and-Willow/
 
 > Thorne & Willow is not a real company. The photography is generated, the
 > numbers are illustrative, and the site is `noindex` so it never turns up in
