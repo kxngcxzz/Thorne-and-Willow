@@ -1,0 +1,4 @@
+# Portfolio demo. Kept out of search so it never competes with a real
+# landscaping company's pages.
+User-agent: *
+Disallow: /

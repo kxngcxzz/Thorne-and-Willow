@@ -1,0 +1,13 @@
+{
+  "name": "Thorne & Willow",
+  "short_name": "Thorne & Willow",
+  "description": "Landscape gardeners, Surrey and West Sussex. Portfolio demo.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ecede7",
+  "theme_color": "#ecede7",
+  "icons": [
+    { "src": "assets/favicon.svg", "sizes": "any", "type": "image/svg+xml" },
+    { "src": "assets/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}
