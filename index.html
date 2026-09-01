@@ -6,6 +6,25 @@
 <title>Thorne &amp; Willow. Landscape gardeners, Surrey and West Sussex.</title>
 <meta name="description" content="Design-led gardens, driveways, terraces and planting across Surrey and West Sussex. Drawn first, built by our own team, and looked after through the first year.">
 <meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://kxngcxzz.github.io/Thorne-and-Willow/">
+
+<!-- Social preview. Scrapers do not resolve relative paths, so these are
+     absolute. The card is 896x469, the 1.91:1 ratio every platform crops
+     to, cut from the hero at its native width rather than upscaled. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Thorne &amp; Willow">
+<meta property="og:locale" content="en_GB">
+<meta property="og:url" content="https://kxngcxzz.github.io/Thorne-and-Willow/">
+<meta property="og:title" content="Thorne &amp; Willow. Landscape gardeners, Surrey and West Sussex.">
+<meta property="og:description" content="Design, build and planting for gardens across Surrey and West Sussex. Drawn first, built by our own team, and looked after through the first year.">
+<meta property="og:image" content="https://kxngcxzz.github.io/Thorne-and-Willow/assets/img/og-card.jpg">
+<meta property="og:image:width" content="896">
+<meta property="og:image:height" content="469">
+<meta property="og:image:alt" content="A striped lawn curving toward deep flowering borders and a brick manor house at golden hour">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Thorne &amp; Willow. Landscape gardeners, Surrey and West Sussex.">
+<meta name="twitter:description" content="Design, build and planting for gardens across Surrey and West Sussex. Drawn first, built by our own team, and looked after through the first year.">
+<meta name="twitter:image" content="https://kxngcxzz.github.io/Thorne-and-Willow/assets/img/og-card.jpg">
 <meta name="theme-color" content="#ecede7">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
@@ -17,6 +36,44 @@
      can bring it back, so the page reads in full with JS blocked. -->
 <script>document.documentElement.className += " js";</script>
 <link rel="stylesheet" href="assets/css/styles.css">
+
+<!-- Structured data. Thorne & Willow is a fictional company and this page is
+     noindex, so this describes the demo, not a real business. It is here
+     because a local trade site is exactly where this markup earns its keep. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "HomeAndConstructionBusiness",
+  "@id": "https://kxngcxzz.github.io/Thorne-and-Willow/#business",
+  "name": "Thorne & Willow",
+  "description": "Design-led gardens, driveways, terraces and planting across Surrey and West Sussex.",
+  "url": "https://kxngcxzz.github.io/Thorne-and-Willow/",
+  "image": "https://kxngcxzz.github.io/Thorne-and-Willow/assets/img/og-card.jpg",
+  "telephone": "+44 1483 774219",
+  "email": "hello@thorneandwillow.co.uk",
+  "foundingDate": "2009",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Cranleigh",
+    "addressRegion": "Surrey",
+    "addressCountry": "GB"
+  },
+  "areaServed": [
+    { "@type": "AdministrativeArea", "name": "Surrey" },
+    { "@type": "AdministrativeArea", "name": "West Sussex" }
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Garden works",
+    "itemListElement": [
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Garden design", "description": "Survey, planting plan and drawings, with a fixed price before any work starts." } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Driveways and paths", "description": "Block paving, gravel and stone, laid on a proper sub-base with proper falls." } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Patios and terraces", "description": "Porcelain and sandstone terraces, planted to the edge so they read as garden." } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Planting and lawns", "description": "Borders built to peak in turn from March to October, and lawns laid on dug soil." } }
+    ]
+  }
+}
+</script>
 </head>
 <body>
 
@@ -39,20 +96,18 @@
 
   <!-- Hero ---------------------------------------------------------------- -->
   <section class="hero" id="top">
+    <!-- The poster is a frame from the video itself, so there is no jump when
+         it starts. No autoplay attribute: main.js decides whether to load at
+         all, which keeps the download off reduced-motion and no-JS visitors. -->
+    <video class="hero__video" id="heroVideo" poster="assets/video/hero-poster.jpg"
+           muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
+    <div class="hero__scrim"></div>
     <div class="wrap hero__in">
       <div class="hero__copy">
         <h1 class="d">we plant for the<br><em>tenth year.</em></h1>
         <p class="lede">Design, build and planting for gardens across Surrey and West Sussex. Made to look right the year it grows in.</p>
         <p class="rule-note">Landscape gardeners since 2009</p>
       </div>
-      <figure class="hero__fig">
-        <picture>
-          <source srcset="assets/img/hero-garden.webp" type="image/webp">
-          <img src="assets/img/hero-garden.jpg" width="896" height="1065"
-               alt="A striped lawn curving toward deep flowering borders and a brick manor house at golden hour"
-               fetchpriority="high" decoding="async">
-        </picture>
-      </figure>
     </div>
   </section>
 
@@ -67,8 +122,11 @@
       <div class="crafts rise" id="crafts">
         <button class="craft" type="button" aria-expanded="true">
           <picture>
-            <source srcset="assets/img/service-design.webp" type="image/webp">
-            <img src="assets/img/service-design.jpg" width="896" height="1199" loading="lazy" decoding="async"
+            <source type="image/webp" sizes="(max-width: 900px) 100vw, 900px"
+                  srcset="assets/img/service-design-900.webp 900w, assets/img/service-design-1800.webp 1800w">
+          <source type="image/jpeg" sizes="(max-width: 900px) 100vw, 900px"
+                  srcset="assets/img/service-design-900.jpg 900w, assets/img/service-design-1800.jpg 1800w">
+            <img src="assets/img/service-design-900.jpg" width="900" height="562" loading="lazy" decoding="async"
                  alt="A gravel path between clipped yew hedges leading to a stone bench in evening light">
           </picture>
           <span class="craft__label d">garden <em>design</em></span>
@@ -80,8 +138,11 @@
 
         <button class="craft" type="button" aria-expanded="false">
           <picture>
-            <source srcset="assets/img/service-driveways.webp" type="image/webp">
-            <img src="assets/img/service-driveways.jpg" width="896" height="1199" loading="lazy" decoding="async"
+            <source type="image/webp" sizes="(max-width: 900px) 100vw, 900px"
+                  srcset="assets/img/service-driveways-900.webp 900w, assets/img/service-driveways-1800.webp 1800w">
+          <source type="image/jpeg" sizes="(max-width: 900px) 100vw, 900px"
+                  srcset="assets/img/service-driveways-900.jpg 900w, assets/img/service-driveways-1800.jpg 1800w">
+            <img src="assets/img/service-driveways-900.jpg" width="900" height="562" loading="lazy" decoding="async"
                  alt="A block-paved driveway curving up to a stone house with a lavender border">
           </picture>
           <span class="craft__label d">driveways &amp; <em>paths</em></span>
@@ -93,8 +154,11 @@
 
         <button class="craft" type="button" aria-expanded="false">
           <picture>
-            <source srcset="assets/img/service-patios.webp" type="image/webp">
-            <img src="assets/img/service-patios.jpg" width="896" height="1199" loading="lazy" decoding="async"
+            <source type="image/webp" sizes="(max-width: 900px) 100vw, 900px"
+                  srcset="assets/img/service-patios-900.webp 900w, assets/img/service-patios-1800.webp 1800w">
+          <source type="image/jpeg" sizes="(max-width: 900px) 100vw, 900px"
+                  srcset="assets/img/service-patios-900.jpg 900w, assets/img/service-patios-1800.jpg 1800w">
+            <img src="assets/img/service-patios-900.jpg" width="900" height="562" loading="lazy" decoding="async"
                  alt="A stone terrace under an oak pergola strung with festoon lights and climbing roses">
           </picture>
           <span class="craft__label d">patios &amp; <em>terraces</em></span>
@@ -106,8 +170,11 @@
 
         <button class="craft" type="button" aria-expanded="false">
           <picture>
-            <source srcset="assets/img/service-planting.webp" type="image/webp">
-            <img src="assets/img/service-planting.jpg" width="896" height="1199" loading="lazy" decoding="async"
+            <source type="image/webp" sizes="(max-width: 900px) 100vw, 900px"
+                  srcset="assets/img/service-planting-900.webp 900w, assets/img/service-planting-1800.webp 1800w">
+          <source type="image/jpeg" sizes="(max-width: 900px) 100vw, 900px"
+                  srcset="assets/img/service-planting-900.jpg 900w, assets/img/service-planting-1800.jpg 1800w">
+            <img src="assets/img/service-planting-900.jpg" width="900" height="562" loading="lazy" decoding="async"
                  alt="A deep herbaceous border of delphiniums and alliums beside a striped lawn">
           </picture>
           <span class="craft__label d">planting &amp; <em>lawns</em></span>
@@ -131,13 +198,19 @@
 
       <div class="ba rise" id="ba">
         <picture>
-          <source srcset="assets/img/after-garden.webp" type="image/webp">
-          <img src="assets/img/after-garden.jpg" width="896" height="1195" loading="lazy" decoding="async"
+          <source type="image/webp" sizes="(max-width: 1080px) 100vw, 675px"
+                  srcset="assets/img/after-garden-675.webp 675w, assets/img/after-garden-1350.webp 1350w">
+          <source type="image/jpeg" sizes="(max-width: 1080px) 100vw, 675px"
+                  srcset="assets/img/after-garden-675.jpg 675w, assets/img/after-garden-1350.jpg 1350w">
+          <img src="assets/img/after-garden-675.jpg" width="675" height="900" loading="lazy" decoding="async"
                alt="The same garden rebuilt with herringbone clay paving, a raised brick planter and a small striped lawn">
         </picture>
         <picture>
-          <source srcset="assets/img/before-garden.webp" type="image/webp">
-          <img class="ba__before" src="assets/img/before-garden.jpg" width="896" height="1195" loading="lazy" decoding="async"
+          <source type="image/webp" sizes="(max-width: 1080px) 100vw, 675px"
+                  srcset="assets/img/before-garden-675.webp 675w, assets/img/before-garden-1350.webp 1350w">
+          <source type="image/jpeg" sizes="(max-width: 1080px) 100vw, 675px"
+                  srcset="assets/img/before-garden-675.jpg 675w, assets/img/before-garden-1350.jpg 1350w">
+          <img class="ba__before" src="assets/img/before-garden-675.jpg" width="675" height="900" loading="lazy" decoding="async"
                alt="The same garden before the work: cracked concrete slabs, weeds and wheelie bins under a grey sky">
         </picture>
         <span class="ba__chip ba__chip--a">Before</span>
@@ -158,23 +231,35 @@
     <div class="wrap seasons__in">
       <figure class="seasons__fig rise" id="seasonFig">
         <picture>
-          <source srcset="assets/img/season-spring.webp" type="image/webp">
-          <img src="assets/img/season-spring.jpg" width="896" height="1127" loading="lazy" decoding="async"
+          <source type="image/webp" sizes="(max-width: 1080px) 100vw, 620px"
+                  srcset="assets/img/season-spring-620.webp 620w, assets/img/season-spring-1240.webp 1240w">
+          <source type="image/jpeg" sizes="(max-width: 1080px) 100vw, 620px"
+                  srcset="assets/img/season-spring-620.jpg 620w, assets/img/season-spring-1240.jpg 1240w">
+          <img src="assets/img/season-spring-620.jpg" width="620" height="780" loading="lazy" decoding="async"
                data-season="spring" alt="The same walled cottage garden in spring, borders full of tulips and narcissi">
         </picture>
         <picture>
-          <source srcset="assets/img/season-summer.webp" type="image/webp">
-          <img src="assets/img/season-summer.jpg" width="896" height="1127" loading="lazy" decoding="async"
+          <source type="image/webp" sizes="(max-width: 1080px) 100vw, 620px"
+                  srcset="assets/img/season-summer-620.webp 620w, assets/img/season-summer-1240.webp 1240w">
+          <source type="image/jpeg" sizes="(max-width: 1080px) 100vw, 620px"
+                  srcset="assets/img/season-summer-620.jpg 620w, assets/img/season-summer-1240.jpg 1240w">
+          <img src="assets/img/season-summer-620.jpg" width="620" height="780" loading="lazy" decoding="async"
                data-season="summer" data-on="true" alt="The same walled cottage garden in high summer, borders at full height either side of a striped grass path">
         </picture>
         <picture>
-          <source srcset="assets/img/season-autumn.webp" type="image/webp">
-          <img src="assets/img/season-autumn.jpg" width="896" height="1127" loading="lazy" decoding="async"
+          <source type="image/webp" sizes="(max-width: 1080px) 100vw, 620px"
+                  srcset="assets/img/season-autumn-620.webp 620w, assets/img/season-autumn-1240.webp 1240w">
+          <source type="image/jpeg" sizes="(max-width: 1080px) 100vw, 620px"
+                  srcset="assets/img/season-autumn-620.jpg 620w, assets/img/season-autumn-1240.jpg 1240w">
+          <img src="assets/img/season-autumn-620.jpg" width="620" height="780" loading="lazy" decoding="async"
                data-season="autumn" alt="The same walled cottage garden in autumn, copper acers and fallen leaves across the grass path">
         </picture>
         <picture>
-          <source srcset="assets/img/season-winter.webp" type="image/webp">
-          <img src="assets/img/season-winter.jpg" width="896" height="1127" loading="lazy" decoding="async"
+          <source type="image/webp" sizes="(max-width: 1080px) 100vw, 620px"
+                  srcset="assets/img/season-winter-620.webp 620w, assets/img/season-winter-1240.webp 1240w">
+          <source type="image/jpeg" sizes="(max-width: 1080px) 100vw, 620px"
+                  srcset="assets/img/season-winter-620.jpg 620w, assets/img/season-winter-1240.jpg 1240w">
+          <img src="assets/img/season-winter-620.jpg" width="620" height="780" loading="lazy" decoding="async"
                data-season="winter" alt="The same walled cottage garden under hard frost, clipped box topiary rimed white">
         </picture>
       </figure>
@@ -267,8 +352,11 @@
       </div>
       <figure class="closing__fig">
         <picture>
-          <source srcset="assets/img/closing-terrace.webp" type="image/webp">
-          <img src="assets/img/closing-terrace.jpg" width="896" height="988" loading="lazy" decoding="async"
+          <source type="image/webp" sizes="(max-width: 700px) 100vw, 664px"
+                  srcset="assets/img/closing-terrace-664.webp 664w, assets/img/closing-terrace-1440.webp 1440w">
+          <source type="image/jpeg" sizes="(max-width: 700px) 100vw, 664px"
+                  srcset="assets/img/closing-terrace-664.jpg 664w, assets/img/closing-terrace-1440.jpg 1440w">
+          <img src="assets/img/closing-terrace-664.jpg" width="664" height="732" loading="lazy" decoding="async"
                alt="A cottage terrace at blue hour, warm lit windows and low garden lighting on a stone wall">
         </picture>
       </figure>

@@ -168,11 +168,13 @@ a:hover { color: var(--accent-deep); }
    4. Navigation
    -------------------------------------------------------------------------- */
 .nav {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 50;
   height: var(--nav-h);
-  background: var(--paper);
+  background: transparent;
   border-bottom: 1px solid transparent;
   transition: border-color 0.25s var(--ease), background 0.25s var(--ease);
 }
@@ -195,11 +197,17 @@ a:hover { color: var(--accent-deep); }
   align-items: baseline;
   gap: 8px;
   font-family: var(--display);
-  color: var(--ink);
+  color: #f2f3ee;
   font-size: 21px;
 }
-.mark span { font-style: italic; font-size: 15px; color: var(--ink-soft); }
-.mark:hover { color: var(--ink); }
+.mark span { font-style: italic; font-size: 15px; color: rgba(242, 243, 238, 0.66); }
+.nav[data-stuck="true"] .mark { color: var(--ink); }
+.nav[data-stuck="true"] .mark span { color: var(--ink-soft); }
+/* The wordmark sits on a dark ground in both places it appears -- over the
+   hero video and on the footer -- so hover lifts to white. Only the stuck bar
+   is on paper, and it overrides. */
+.nav .mark:hover, .foot .mark:hover { color: #ffffff; }
+.nav[data-stuck="true"] .mark:hover { color: var(--ink); }
 
 .nav__links { display: flex; align-items: center; gap: 36px; }
 .nav__links a {
@@ -207,31 +215,73 @@ a:hover { color: var(--accent-deep); }
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--ink-soft);
+  /* Full strength over the video. Dimming this to 82% cost 1.2 of contrast
+     against open sky, which is more than the softer look was worth. */
+  color: #f2f3ee;
 }
 .nav__links a:hover,
-.nav__links a[aria-current="true"] { color: var(--ink); }
+.nav__links a[aria-current="true"] { color: #ffffff; }
+.nav[data-stuck="true"] .nav__links a { color: var(--ink-soft); }
+.nav[data-stuck="true"] .nav__links a:hover,
+.nav[data-stuck="true"] .nav__links a[aria-current="true"] { color: var(--ink); }
+.nav__toggle { color: #f2f3ee; }
+.nav[data-stuck="true"] .nav__toggle { color: var(--ink); }
 
 .nav__toggle { display: none; }
 
 /* --------------------------------------------------------------------------
-   5. Hero
+   5. Hero. Full bleed video band. The poster carries the first paint and the
+   video only arrives if main.js decides it should, so a reduced-motion or
+   no-JS visitor gets a still and downloads nothing extra.
    -------------------------------------------------------------------------- */
-.hero { padding: clamp(40px, 6vw, 76px) 0 clamp(56px, 7vw, 92px); }
-
-.hero__in {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 656px);
-  gap: clamp(32px, 5vw, 72px);
-  align-items: center;
+.hero {
+  position: relative;
+  min-height: min(88vh, 760px);
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  background: var(--ink);
 }
 
-.hero__copy { display: flex; flex-direction: column; gap: 28px; }
-.hero h1 { font-size: var(--s4); }
-.hero .lede { max-width: 27rem; }
+.hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* The poster paints here until the video is asked for. */
+  background: var(--ink) center/cover no-repeat;
+}
 
-.hero__fig { margin: 0; }
-.hero__fig img { width: 100%; aspect-ratio: 656 / 780; object-fit: cover; }
+/* Weighted to the bottom left, where the headline sits, and kept off the
+   sky so the top of the frame stays open. */
+.hero__scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    /* Top band. The bar sits over open sky, the brightest thing in the frame,
+       so it gets its own cover. Measured in pixels rather than percent: the
+       bar is a fixed height, so a percentage band thinned out on short
+       viewports exactly where the video crop was tightest and brightest. */
+    linear-gradient(to bottom, rgba(20, 24, 17, 0.76) 0px, rgba(20, 24, 17, 0.46) 66px, rgba(20, 24, 17, 0) 168px),
+    /* Bottom band, under the headline block. */
+    linear-gradient(to top, rgba(20, 24, 17, 0.84) 0%, rgba(20, 24, 17, 0.38) 40%, rgba(20, 24, 17, 0) 70%),
+    /* Left band, so the copy column keeps its footing even when the right of
+       the frame is doing the work. */
+    linear-gradient(to right, rgba(20, 24, 17, 0.54) 0%, rgba(20, 24, 17, 0.14) 48%, rgba(20, 24, 17, 0) 74%);
+}
+
+.hero__in {
+  position: relative;
+  padding-top: clamp(96px, 18vh, 200px);
+  padding-bottom: clamp(48px, 8vh, 88px);
+}
+
+.hero__copy { display: flex; flex-direction: column; gap: 26px; max-width: 34rem; }
+.hero h1 { font-size: var(--s4); color: #f6f7f2; }
+.hero .lede { color: rgba(242, 243, 238, 0.94); max-width: 27rem; }
+.hero .rule-note { color: rgba(242, 243, 238, 0.76); }
+.hero .rule-note::before { background: rgba(242, 243, 238, 0.5); }
 
 /* --------------------------------------------------------------------------
    6. Section furniture
@@ -619,10 +669,12 @@ a:hover { color: var(--accent-deep); }
   .seasons__fig { max-width: 560px; }
   .ba { max-width: 560px; }
   .closing__in { grid-template-columns: minmax(0, 1fr); }
-  /* Capped at the source width so cover never enlarges it. Between 896 and
-     1080 that leaves a margin either side, which reads as a framed plate
-     rather than a stretched band. */
-  .closing__fig { min-height: 300px; order: 2; width: 100%; max-width: 896px; margin-inline: auto; }
+  /* Capped so cover never enlarges the plate. Between 664 and 1080 that
+     leaves a margin either side, which reads as a framed plate rather than a
+     stretched band. The 1440 file covers this at 2x with room to spare, which
+     the old 1328 one did not: the desktop grid hands the figure 664.5px, and
+     1328 was a pixel short of covering it. */
+  .closing__fig { min-height: 300px; order: 2; width: 100%; max-width: 664px; margin-inline: auto; }
 }
 
 @media (max-width: 900px) {
@@ -666,6 +718,12 @@ a:hover { color: var(--accent-deep); }
     border-bottom: 1px solid var(--rule);
   }
   .nav__links[data-open="true"] a { padding: 12px 0; }
+  /* The dropped panel is paper whatever the bar behind it is doing, so its
+     links leave the over-video palette behind. Without this they stay
+     near-white on paper and effectively vanish. */
+  .nav__links[data-open="true"] a { color: var(--ink-soft); }
+  .nav__links[data-open="true"] a:hover,
+  .nav__links[data-open="true"] a[aria-current="true"] { color: var(--ink); }
   .nav__toggle {
     display: inline-flex;
     align-items: center;
@@ -678,10 +736,14 @@ a:hover { color: var(--accent-deep); }
     font-weight: 600;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--ink);
     cursor: pointer;
   }
   .nav .btn { display: none; }
+  .hero__scrim {
+    background:
+      linear-gradient(to bottom, rgba(20, 24, 17, 0.84) 0px, rgba(20, 24, 17, 0.58) 72px, rgba(20, 24, 17, 0) 190px),
+      linear-gradient(to top, rgba(20, 24, 17, 0.86) 0%, rgba(20, 24, 17, 0.46) 46%, rgba(20, 24, 17, 0) 76%);
+  }
   .foot__in { flex-direction: column; align-items: flex-start; }
   /* Touch targets. On a pointer 20px is fine; on a thumb it is not. */
   .foot a { display: inline-flex; align-items: center; min-height: 44px; }

@@ -38,6 +38,16 @@ for html in $(find . -name '*.html' -not -path './.git/*' | sort); do
     else bad "#$anchor  (no matching id)"; fi
   done
 
+  # Social card images are absolute URLs, so the loop above skips them. They
+  # break silently: nothing on the page renders wrong, the preview is just
+  # blank wherever the link gets shared. Check the path resolves locally.
+  for meta in $(grep -oE '(property="og:image"|name="twitter:image") content="[^"]+"' "$html" \
+                | grep -oE 'content="[^"]+"' | sed -E 's/^content="//; s/"$//' | sort -u); do
+    local_path=$(printf '%s' "$meta" | sed -E 's#^https?://[^/]+/[^/]+/##')
+    if [ -e "$local_path" ]; then note "ok    $local_path  (social card)"
+    else bad "$meta  (social card image missing)"; fi
+  done
+
   # things that must never ship
   if grep -q 'file://' "$html"; then bad "file:// link in $html"; fi
   if grep -qE 'src="data:image' "$html"; then bad "base64 image inlined in $html"; fi
