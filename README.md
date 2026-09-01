@@ -123,3 +123,36 @@ Driven in headless Chromium at 1440, 1280, 1024, 900, 768, 430, 390 and 320 px:
 - the whole page still reads with JavaScript disabled, with nothing left
   invisible
 - every interactive target at least 44 px on touch widths
+
+## Deliberate choices a reviewer might query
+
+**The site is `noindex, nofollow` and `robots.txt` disallows everything.**
+Thorne & Willow is a fictional company with a real-sounding name in a real
+county. Making a firm that does not exist rank for "landscape gardeners
+Surrey" would put it in front of people looking for someone who could
+actually turn up. The SEO work is all present and correct -- canonical,
+Open Graph, Twitter card, `HomeAndConstructionBusiness` JSON-LD, semantic
+headings, alt text on every image -- it is switched off at the last step,
+on purpose. Flip both to make it live.
+
+**No `sitemap.xml`.** It is one page. A sitemap listing the single URL a
+crawler already has is cargo cult, not diligence.
+
+**No `llms.txt`.** A 2024 proposal, not a standard, and no major AI crawler
+has committed to reading it. Cheap to add later if that changes.
+
+**The phone number is 01632 960 219.** Ofcom reserves 01632 960000-960999
+for fiction, which is what this is. The number this replaced was in 01483 --
+the live Guildford and Cranleigh code -- and a plausible number in a live
+range can belong to a real person. It was a tappable `tel:` link and it was
+in the LocalBusiness schema.
+
+**The email domain is not similarly protected.** There is no reserved
+`.co.uk` equivalent of `example.com`, so `hello@thorneandwillow.co.uk` is a
+domain somebody could register. Lower risk than a tappable phone link -- mail
+to an unregistered domain simply bounces -- but worth knowing it is a
+judgement call rather than a guarantee.
+
+**The footer says so in plain English.** "A portfolio build. Thorne & Willow
+is not a real company, the photography is generated, and the numbers are
+illustrative."
