@@ -95,6 +95,13 @@ TARGETS = [
     ("craft heading",  ".craft__body h3",    2, 3.0, "craft"),
     ("craft body",     ".craft__body p",     2, 4.5, "craft"),
     ("craft label",    ".craft__label",      0, 4.5, "craft"),
+    ("season name",    ".seasons__name",     0, 3.0, "seasons"),
+    ("season kicker",  ".seasons__kicker",   0, 4.5, "seasons"),
+    ("season note",    ".seasons__note",     0, 4.5, "seasons"),
+    ("season tab",     ".seasons__pick button[aria-selected='true']", 0, 4.5, "seasons"),
+    ("closing head",   ".closing__card h2",  0, 3.0, "closing"),
+    ("closing body",   ".closing__card p",   0, 4.5, "closing"),
+    ("closing eyebrow", ".closing__card .eyebrow", 0, 4.5, "closing"),
 ]
 
 VIEWS = [("desktop", 1450, 800, 1), ("desktop 2x", 1440, 900, 2),
@@ -119,6 +126,12 @@ with sync_playwright() as pw:
                         settle(p)
                     except Exception:
                         pass
+            elif where == "seasons":
+                p.evaluate("() => document.getElementById('seasons').scrollIntoView()")
+                settle(p)
+            elif where == "closing":
+                p.evaluate("() => document.getElementById('book').scrollIntoView()")
+                settle(p)
             else:
                 p.evaluate("() => window.scrollTo(0, 0)")
                 settle(p)

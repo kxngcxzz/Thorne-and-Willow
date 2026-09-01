@@ -266,11 +266,15 @@ a:hover { color: var(--accent-deep); }
        so it gets its own cover. Measured in pixels rather than percent: the
        bar is a fixed height, so a percentage band thinned out on short
        viewports exactly where the video crop was tightest and brightest. */
-    linear-gradient(to bottom, rgba(20, 24, 17, 0.72) 0px, rgba(20, 24, 17, 0.42) 66px, rgba(20, 24, 17, 0) 190px),
+    /* The top band has to reach a long way down. This frame is open sky across
+       its whole upper half, and the kicker -- the highest and smallest piece
+       of text -- sits about a quarter of the way down, right on the brightest
+       part of it. Stopping at 190px left it at 2.3:1. */
+    linear-gradient(to bottom, rgba(20, 24, 17, 0.8) 0px, rgba(20, 24, 17, 0.58) 120px, rgba(20, 24, 17, 0.42) 40%, rgba(20, 24, 17, 0.1) 65%),
     /* Centre wash, heaviest where the copy column sits. */
-    radial-gradient(ellipse 70% 60% at 50% 52%, rgba(20, 24, 17, 0.62) 0%, rgba(20, 24, 17, 0.34) 55%, rgba(20, 24, 17, 0.12) 100%),
+    radial-gradient(ellipse 76% 58% at 50% 48%, rgba(20, 24, 17, 0.5) 0%, rgba(20, 24, 17, 0.3) 60%, rgba(20, 24, 17, 0.06) 100%),
     /* Floor, so the bottom edge does not end on bright grass. */
-    linear-gradient(to top, rgba(20, 24, 17, 0.6) 0%, rgba(20, 24, 17, 0.14) 26%, rgba(20, 24, 17, 0) 46%);
+    linear-gradient(to top, rgba(20, 24, 17, 0.6) 0%, rgba(20, 24, 17, 0.14) 28%, rgba(20, 24, 17, 0) 48%);
 }
 
 .hero__in {
@@ -547,14 +551,23 @@ a:hover { color: var(--accent-deep); }
 /* --------------------------------------------------------------------------
    9. Seasons
    -------------------------------------------------------------------------- */
-.seasons__in {
-  display: grid;
-  grid-template-columns: minmax(0, 620px) minmax(0, 1fr);
-  gap: clamp(32px, 5vw, 88px);
+/* Full bleed, like the reference: the garden fills the screen and the season
+   name sits on it, rather than an inset plate with a column of copy beside. */
+.seasons {
+  position: relative;
+  min-height: 92svh;
+  display: flex;
   align-items: center;
+  overflow: hidden;
+  padding: 0;
 }
 
-.seasons__fig { position: relative; margin: 0; aspect-ratio: 620 / 780; overflow: hidden; }
+.seasons__fig {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  margin: 0;
+}
 .seasons__fig img {
   position: absolute;
   inset: 0;
@@ -562,33 +575,61 @@ a:hover { color: var(--accent-deep); }
   height: 100%;
   object-fit: cover;
   opacity: 0;
-  transition: opacity 0.6s var(--ease);
+  transition: opacity 0.7s var(--ease);
 }
 .seasons__fig img[data-on="true"] { opacity: 1; }
 
-.seasons__copy { display: flex; flex-direction: column; gap: 24px; }
+/* Same lesson as the crafts panel: the words go above the wash, explicitly. */
+.seasons__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    radial-gradient(ellipse 78% 62% at 50% 50%, rgba(20, 24, 17, 0.62) 0%, rgba(20, 24, 17, 0.38) 58%, rgba(20, 24, 17, 0.14) 100%),
+    linear-gradient(to top, rgba(20, 24, 17, 0.58) 0%, rgba(20, 24, 17, 0.12) 30%, rgba(20, 24, 17, 0) 55%),
+    linear-gradient(to bottom, rgba(20, 24, 17, 0.5) 0px, rgba(20, 24, 17, 0.18) 120px, rgba(20, 24, 17, 0) 260px);
+}
+
+.seasons__in {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 22px;
+  padding-block: clamp(72px, 12vh, 140px);
+}
 .seasons__kicker {
   font-family: var(--display);
   font-style: italic;
   font-size: var(--s1);
-  color: rgba(242, 243, 238, 0.7);
+  color: rgba(242, 243, 238, 0.88);
 }
-.seasons h2 {
+/* The whole point of the section: one enormous italic word on the garden. */
+.seasons__name {
   font-family: var(--display);
   font-style: italic;
   font-weight: 400;
-  font-size: var(--s5);
-  line-height: 1.1;
-  padding-bottom: 0.1em;
+  font-size: clamp(64px, 13vw, 190px);
+  line-height: 1;
+  padding-bottom: 0.08em;
   color: #f6f7f2;
 }
 .seasons__note {
-  max-width: 30rem;
+  max-width: 34rem;
   line-height: 1.7;
-  color: rgba(242, 243, 238, 0.84);
+  color: rgba(242, 243, 238, 0.9);
 }
 
-.seasons__pick { display: flex; flex-wrap: wrap; gap: clamp(20px, 3vw, 44px); margin-top: 16px; }
+.seasons__pick {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(20px, 3vw, 44px);
+  margin-top: 16px;
+}
 .seasons__pick button {
   background: none;
   border: 0;
@@ -669,23 +710,50 @@ a:hover { color: var(--accent-deep); }
 /* --------------------------------------------------------------------------
    12. Closing and footer
    -------------------------------------------------------------------------- */
-.closing { background: var(--ink); color: var(--on-dark); }
-.closing__in { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 6fr); }
+/* Full bleed with the invitation centred on it, the way the reference closes.
+   It used to be a split -- dark panel one side, photograph the other -- which
+   read as two things rather than one. */
+.closing {
+  position: relative;
+  min-height: 88svh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: var(--ink);
+  color: var(--on-dark);
+}
 
-.closing__copy {
-  padding: clamp(56px, 7vw, 96px) clamp(24px, 5vw, 72px);
+.closing__fig { position: absolute; inset: 0; z-index: 0; margin: 0; }
+.closing__fig img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+.closing__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    radial-gradient(ellipse 64% 58% at 50% 50%, rgba(20, 24, 17, 0.74) 0%, rgba(20, 24, 17, 0.46) 60%, rgba(20, 24, 17, 0.2) 100%),
+    linear-gradient(to top, rgba(20, 24, 17, 0.5) 0%, rgba(20, 24, 17, 0) 42%);
+}
+
+.closing__in { position: relative; z-index: 2; width: 100%; }
+
+.closing__card {
+  max-width: 40rem;
+  margin-inline: auto;
+  padding: clamp(36px, 5vw, 64px) clamp(28px, 4vw, 56px);
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 24px;
+  align-items: center;
+  text-align: center;
+  gap: 22px;
+  background: rgba(20, 24, 17, 0.42);
+  border: 1px solid rgba(242, 243, 238, 0.18);
+  backdrop-filter: blur(4px);
 }
-.closing__copy .eyebrow { color: rgba(242, 243, 238, 0.6); }
-.closing__copy h2 { font-size: var(--s4); color: #f5f6f1; }
-.closing__copy p { max-width: 29rem; color: rgba(242, 243, 238, 0.82); line-height: 1.7; }
-.closing__copy .btn { align-self: flex-start; margin-top: 8px; }
-
-.closing__fig { position: relative; margin: 0; min-height: 340px; }
-.closing__fig img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.closing__card .eyebrow { color: rgba(242, 243, 238, 0.8); }
+.closing__card h2 { font-size: var(--s4); color: #f5f6f1; }
+.closing__card p { max-width: 29rem; color: rgba(242, 243, 238, 0.92); line-height: 1.7; }
+.closing__card .btn { margin-top: 8px; }
 
 .foot {
   background: var(--ink);
@@ -733,18 +801,9 @@ a:hover { color: var(--accent-deep); }
 @media (max-width: 1080px) {
   .hero__in,
   .ba__in,
-  .seasons__in { grid-template-columns: minmax(0, 1fr); }
-  .seasons__fig { order: 2; }
   .ba__in > .ba { order: 2; }
   .hero__fig { max-width: 560px; }
-  .seasons__fig { max-width: 560px; }
   .ba { max-width: 560px; }
-  .closing__in { grid-template-columns: minmax(0, 1fr); }
-  /* Capped so cover never enlarges the plate. Between 664 and 1080 that
-     leaves a margin either side, which reads as a framed plate rather than a
-     stretched band. Above 1080 the plate is not inside the wrap -- it tracks
-     46vw -- which is why its sizes hint says 46vw rather than a fixed width. */
-  .closing__fig { min-height: 300px; order: 2; width: 100%; max-width: 664px; margin-inline: auto; }
 }
 
 @media (max-width: 900px) {
@@ -815,7 +874,7 @@ a:hover { color: var(--accent-deep); }
      wider than the desktop ellipse and reach the full width. */
   .hero__scrim {
     background:
-      linear-gradient(to bottom, rgba(20, 24, 17, 0.84) 0px, rgba(20, 24, 17, 0.58) 72px, rgba(20, 24, 17, 0.12) 190px),
+      linear-gradient(to bottom, rgba(20, 24, 17, 0.84) 0px, rgba(20, 24, 17, 0.6) 100px, rgba(20, 24, 17, 0.44) 40%, rgba(20, 24, 17, 0.14) 68%),
       radial-gradient(ellipse 135% 62% at 50% 50%, rgba(20, 24, 17, 0.7) 0%, rgba(20, 24, 17, 0.5) 60%, rgba(20, 24, 17, 0.24) 100%),
       linear-gradient(to top, rgba(20, 24, 17, 0.6) 0%, rgba(20, 24, 17, 0.2) 30%, rgba(20, 24, 17, 0) 55%);
   }
