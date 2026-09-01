@@ -100,9 +100,13 @@
          download, so this one is eager and high priority: everything else on
          the page is lazy and can wait its turn. -->
     <picture>
-      <source type="image/webp" sizes="100vw"
+      <source media="(max-width: 700px)" type="image/webp" sizes="128vw"
+                  srcset="assets/img/hero-garden-p480.webp 480w, assets/img/hero-garden-p720.webp 720w, assets/img/hero-garden-p1200.webp 1200w, assets/img/hero-garden-p1898.webp 1898w">
+                  <source type="image/webp" sizes="100vw"
               srcset="assets/img/hero-garden-960.webp 960w, assets/img/hero-garden-1440.webp 1440w, assets/img/hero-garden-1920.webp 1920w, assets/img/hero-garden-2880.webp 2880w, assets/img/hero-garden-3840.webp 3840w">
-      <source type="image/jpeg" sizes="100vw"
+      <source media="(max-width: 700px)" type="image/jpeg" sizes="128vw"
+                  srcset="assets/img/hero-garden-p480.jpg 480w, assets/img/hero-garden-p720.jpg 720w, assets/img/hero-garden-p1200.jpg 1200w, assets/img/hero-garden-p1898.jpg 1898w">
+                  <source type="image/jpeg" sizes="100vw"
               srcset="assets/img/hero-garden-960.jpg 960w, assets/img/hero-garden-1440.jpg 1440w, assets/img/hero-garden-1920.jpg 1920w, assets/img/hero-garden-2880.jpg 2880w, assets/img/hero-garden-3840.jpg 3840w">
       <img class="hero__img" src="assets/img/hero-garden-1440.jpg" width="2752" height="1536"
            fetchpriority="high" decoding="async" alt="">
@@ -209,19 +213,19 @@
 
       <div class="ba rise" id="ba">
         <picture>
-          <source type="image/webp" sizes="(max-width: 1080px) 100vw, 675px"
-                  srcset="assets/img/after-garden-448.webp 448w, assets/img/after-garden-896.webp 896w, assets/img/after-garden-1792.webp 1792w">
-          <source type="image/jpeg" sizes="(max-width: 1080px) 100vw, 675px"
-                  srcset="assets/img/after-garden-448.jpg 448w, assets/img/after-garden-896.jpg 896w, assets/img/after-garden-1792.jpg 1792w">
-          <img src="assets/img/after-garden-448.jpg" width="448" height="597" loading="lazy" decoding="async"
+          <source type="image/webp" sizes="(max-width: 1080px) 100vw, 1344px"
+                  srcset="assets/img/after-garden-688.webp 688w, assets/img/after-garden-1376.webp 1376w, assets/img/after-garden-2752.webp 2752w">
+          <source type="image/jpeg" sizes="(max-width: 1080px) 100vw, 1344px"
+                  srcset="assets/img/after-garden-688.jpg 688w, assets/img/after-garden-1376.jpg 1376w, assets/img/after-garden-2752.jpg 2752w">
+          <img src="assets/img/after-garden-688.jpg" width="2752" height="1536" loading="lazy" decoding="async"
                alt="The same garden rebuilt with herringbone clay paving, a raised brick planter and a small striped lawn">
         </picture>
         <picture>
-          <source type="image/webp" sizes="(max-width: 1080px) 100vw, 675px"
-                  srcset="assets/img/before-garden-448.webp 448w, assets/img/before-garden-896.webp 896w, assets/img/before-garden-1792.webp 1792w">
-          <source type="image/jpeg" sizes="(max-width: 1080px) 100vw, 675px"
-                  srcset="assets/img/before-garden-448.jpg 448w, assets/img/before-garden-896.jpg 896w, assets/img/before-garden-1792.jpg 1792w">
-          <img class="ba__before" src="assets/img/before-garden-448.jpg" width="448" height="597" loading="lazy" decoding="async"
+          <source type="image/webp" sizes="(max-width: 1080px) 100vw, 1344px"
+                  srcset="assets/img/before-garden-688.webp 688w, assets/img/before-garden-1376.webp 1376w, assets/img/before-garden-2752.webp 2752w">
+          <source type="image/jpeg" sizes="(max-width: 1080px) 100vw, 1344px"
+                  srcset="assets/img/before-garden-688.jpg 688w, assets/img/before-garden-1376.jpg 1376w, assets/img/before-garden-2752.jpg 2752w">
+          <img class="ba__before" src="assets/img/before-garden-688.jpg" width="2752" height="1536" loading="lazy" decoding="async"
                alt="The same garden before the work: cracked concrete slabs, weeds and wheelie bins under a grey sky">
         </picture>
         <span class="ba__chip ba__chip--a">Before</span>
@@ -241,33 +245,49 @@
   <section class="section--dark seasons" id="seasons">
     <figure class="seasons__fig" id="seasonFig">
         <picture>
-          <source type="image/webp" sizes="100vw"
+          <source media="(max-width: 700px)" type="image/webp" sizes="128vw"
+                  data-srcset="assets/img/season-spring-p480.webp 480w, assets/img/season-spring-p720.webp 720w, assets/img/season-spring-p949.webp 949w">
+                  <source type="image/webp" sizes="100vw"
                   data-srcset="assets/img/season-spring-960.webp 960w, assets/img/season-spring-1440.webp 1440w, assets/img/season-spring-2752.webp 2752w">
-          <source type="image/jpeg" sizes="100vw"
+          <source media="(max-width: 700px)" type="image/jpeg" sizes="128vw"
+                  data-srcset="assets/img/season-spring-p480.jpg 480w, assets/img/season-spring-p720.jpg 720w, assets/img/season-spring-p949.jpg 949w">
+                  <source type="image/jpeg" sizes="100vw"
                   data-srcset="assets/img/season-spring-960.jpg 960w, assets/img/season-spring-1440.jpg 1440w, assets/img/season-spring-2752.jpg 2752w">
           <img data-src="assets/img/season-spring-960.jpg" width="2752" height="1536" loading="lazy" decoding="async"
                data-season="spring" alt="The same walled cottage garden in spring, borders full of tulips and narcissi">
         </picture>
         <picture>
-          <source type="image/webp" sizes="100vw"
+          <source media="(max-width: 700px)" type="image/webp" sizes="128vw"
+                  srcset="assets/img/season-summer-p480.webp 480w, assets/img/season-summer-p720.webp 720w, assets/img/season-summer-p949.webp 949w">
+                  <source type="image/webp" sizes="100vw"
                   srcset="assets/img/season-summer-960.webp 960w, assets/img/season-summer-1440.webp 1440w, assets/img/season-summer-2752.webp 2752w">
-          <source type="image/jpeg" sizes="100vw"
+          <source media="(max-width: 700px)" type="image/jpeg" sizes="128vw"
+                  srcset="assets/img/season-summer-p480.jpg 480w, assets/img/season-summer-p720.jpg 720w, assets/img/season-summer-p949.jpg 949w">
+                  <source type="image/jpeg" sizes="100vw"
                   srcset="assets/img/season-summer-960.jpg 960w, assets/img/season-summer-1440.jpg 1440w, assets/img/season-summer-2752.jpg 2752w">
           <img src="assets/img/season-summer-960.jpg" width="2752" height="1536" loading="lazy" decoding="async"
                data-season="summer" data-on="true" alt="The same walled cottage garden in high summer, borders at full height either side of a striped grass path">
         </picture>
         <picture>
-          <source type="image/webp" sizes="100vw"
+          <source media="(max-width: 700px)" type="image/webp" sizes="128vw"
+                  data-srcset="assets/img/season-autumn-p480.webp 480w, assets/img/season-autumn-p720.webp 720w, assets/img/season-autumn-p949.webp 949w">
+                  <source type="image/webp" sizes="100vw"
                   data-srcset="assets/img/season-autumn-960.webp 960w, assets/img/season-autumn-1440.webp 1440w, assets/img/season-autumn-2752.webp 2752w">
-          <source type="image/jpeg" sizes="100vw"
+          <source media="(max-width: 700px)" type="image/jpeg" sizes="128vw"
+                  data-srcset="assets/img/season-autumn-p480.jpg 480w, assets/img/season-autumn-p720.jpg 720w, assets/img/season-autumn-p949.jpg 949w">
+                  <source type="image/jpeg" sizes="100vw"
                   data-srcset="assets/img/season-autumn-960.jpg 960w, assets/img/season-autumn-1440.jpg 1440w, assets/img/season-autumn-2752.jpg 2752w">
           <img data-src="assets/img/season-autumn-960.jpg" width="2752" height="1536" loading="lazy" decoding="async"
                data-season="autumn" alt="The same walled cottage garden in autumn, copper acers and fallen leaves across the grass path">
         </picture>
         <picture>
-          <source type="image/webp" sizes="100vw"
+          <source media="(max-width: 700px)" type="image/webp" sizes="128vw"
+                  data-srcset="assets/img/season-winter-p480.webp 480w, assets/img/season-winter-p720.webp 720w, assets/img/season-winter-p949.webp 949w">
+                  <source type="image/webp" sizes="100vw"
                   data-srcset="assets/img/season-winter-960.webp 960w, assets/img/season-winter-1440.webp 1440w, assets/img/season-winter-2752.webp 2752w">
-          <source type="image/jpeg" sizes="100vw"
+          <source media="(max-width: 700px)" type="image/jpeg" sizes="128vw"
+                  data-srcset="assets/img/season-winter-p480.jpg 480w, assets/img/season-winter-p720.jpg 720w, assets/img/season-winter-p949.jpg 949w">
+                  <source type="image/jpeg" sizes="100vw"
                   data-srcset="assets/img/season-winter-960.jpg 960w, assets/img/season-winter-1440.jpg 1440w, assets/img/season-winter-2752.jpg 2752w">
           <img data-src="assets/img/season-winter-960.jpg" width="2752" height="1536" loading="lazy" decoding="async"
                data-season="winter" alt="The same walled cottage garden under hard frost, clipped box topiary rimed white">
@@ -327,15 +347,15 @@
     <div class="wrap">
       <div class="stats rise">
         <div class="stat">
-          <span class="stat__n">412</span>
+          <span class="stat__n"><span data-count="412">412</span></span>
           <span class="stat__l">Gardens built since 2009</span>
         </div>
         <div class="stat">
-          <span class="stat__n">17<em>yrs</em></span>
+          <span class="stat__n"><span data-count="17">17</span><em>yrs</em></span>
           <span class="stat__l">Same two people running it</span>
         </div>
         <div class="stat">
-          <span class="stat__n">94<em>%</em></span>
+          <span class="stat__n"><span data-count="94">94</span><em>%</em></span>
           <span class="stat__l">Who have us back within five years</span>
         </div>
       </div>
@@ -354,9 +374,13 @@
   <section class="closing" id="book">
     <figure class="closing__fig">
       <picture>
-        <source type="image/webp" sizes="100vw"
+        <source media="(max-width: 700px)" type="image/webp" sizes="128vw"
+                  srcset="assets/img/closing-terrace-p480.webp 480w, assets/img/closing-terrace-p720.webp 720w, assets/img/closing-terrace-p949.webp 949w">
+                  <source type="image/webp" sizes="100vw"
                 srcset="assets/img/closing-terrace-960.webp 960w, assets/img/closing-terrace-1440.webp 1440w, assets/img/closing-terrace-2752.webp 2752w">
-        <source type="image/jpeg" sizes="100vw"
+        <source media="(max-width: 700px)" type="image/jpeg" sizes="128vw"
+                  srcset="assets/img/closing-terrace-p480.jpg 480w, assets/img/closing-terrace-p720.jpg 720w, assets/img/closing-terrace-p949.jpg 949w">
+                  <source type="image/jpeg" sizes="100vw"
                 srcset="assets/img/closing-terrace-960.jpg 960w, assets/img/closing-terrace-1440.jpg 1440w, assets/img/closing-terrace-2752.jpg 2752w">
         <img src="assets/img/closing-terrace-960.jpg" width="2752" height="1536" loading="lazy" decoding="async"
              alt="A Cotswold stone cottage terrace, lit windows and low lighting washing down a stone retaining wall onto planting and a striped lawn">

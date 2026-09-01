@@ -147,6 +147,46 @@
     apply(split);
   }
 
+  /* ---- Counting stats ----------------------------------------------------
+     The reference runs its figures up as the section arrives -- 395, 399,
+     400 -- rather than just printing them. Two details make it read as
+     confidence rather than as a gimmick:
+
+     it starts near the answer, not at zero, so the number never changes
+     width and the row never reflows (tabular figures do the rest), and it
+     eases out, so the last few digits settle rather than snapping.
+
+     Reduced motion gets the final number immediately. The markup already
+     holds it, so nothing here has to run for the page to be correct. */
+  var counters = Array.prototype.slice.call(document.querySelectorAll("[data-count]"));
+  if (counters.length && !reduced && "IntersectionObserver" in window) {
+    var runCount = function (el) {
+      var to = parseInt(el.getAttribute("data-count"), 10);
+      if (!isFinite(to)) return;
+      var from = Math.max(0, Math.floor(to * 0.94));
+      if (from === to) return;
+      var started = null, DUR = 1100;
+      var step = function (now) {
+        if (started === null) started = now;
+        var t = Math.min(1, (now - started) / DUR);
+        var eased = 1 - Math.pow(1 - t, 3);
+        el.textContent = String(Math.round(from + (to - from) * eased));
+        if (t < 1) requestAnimationFrame(step);
+      };
+      el.textContent = String(from);
+      requestAnimationFrame(step);
+    };
+
+    var countObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        countObs.unobserve(en.target);
+        runCount(en.target);
+      });
+    }, { threshold: 0.9 });
+    counters.forEach(function (el) { countObs.observe(el); });
+  }
+
   /* ---- Seasons ----------------------------------------------------------- */
   var pick = document.getElementById("seasonPick");
   var fig = document.getElementById("seasonFig");
@@ -200,9 +240,42 @@
       if (noteEl) noteEl.textContent = NOTES[season];
     };
 
+    /* The section plays itself. It only runs while it is on screen -- a
+       carousel ticking away in a scrolled-past section is wasted work and,
+       for anyone using a screen reader, noise. Any deliberate interaction
+       stops it for good: having the picture change under someone who has
+       just chosen a season is worse than never moving at all. */
+    var ORDER = ["spring", "summer", "autumn", "winter"];
+    var timer = null, taken = false;
+
+    var stop = function () {
+      taken = true;
+      if (timer) { clearInterval(timer); timer = null; }
+    };
+    var start = function () {
+      if (taken || timer || reduced) return;
+      timer = window.setInterval(function () {
+        var i = ORDER.indexOf(pick.querySelector("[aria-selected='true']")
+          .getAttribute("data-season"));
+        show(ORDER[(i + 1) % ORDER.length]);
+      }, 5200);
+    };
+
+    if (!reduced && "IntersectionObserver" in window) {
+      new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) { en.isIntersecting ? start() : stop2(); });
+      }, { threshold: 0.5 }).observe(pick.closest("section"));
+    }
+    /* Leaving the section only pauses; only a person stops it. */
+    function stop2() { if (timer) { clearInterval(timer); timer = null; } }
+
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) { stop2(); } else { start(); }
+    });
+
     pick.addEventListener("click", function (e) {
       var btn = e.target.closest("button[data-season]");
-      if (btn) show(btn.getAttribute("data-season"));
+      if (btn) { stop(); show(btn.getAttribute("data-season")); }
     });
 
     /* Once the page has gone quiet, pull the other three in the background so
@@ -223,6 +296,7 @@
       var next = e.key === "ArrowRight" ? i + 1 : e.key === "ArrowLeft" ? i - 1 : -1;
       if (next < 0) return;
       e.preventDefault();
+      stop();
       var t = tabs[(next + tabs.length) % tabs.length];
       t.focus();
       show(t.getAttribute("data-season"));

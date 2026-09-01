@@ -467,13 +467,11 @@ a:hover { color: var(--accent-deep); }
    8. Before and after. Two photographs of the same camera position, the
    top one clipped by a variable the handle writes to.
    -------------------------------------------------------------------------- */
-.ba__in {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 675px);
-  gap: clamp(32px, 5vw, 88px);
-  align-items: center;
-}
-.ba__copy { display: flex; flex-direction: column; gap: 26px; }
+/* The pair is landscape now, so the slider runs the full column with the
+   copy stacked above it, the way the reference does. Side by side with a
+   portrait plate was a consequence of the old renders, not a decision. */
+.ba__in { display: flex; flex-direction: column; gap: clamp(28px, 4vw, 52px); }
+.ba__copy { display: flex; flex-direction: column; gap: 20px; }
 .ba__copy h2 { font-size: var(--s3); }
 .ba__copy p { max-width: 32rem; color: var(--ink-soft); line-height: 1.75; }
 
@@ -481,7 +479,7 @@ a:hover { color: var(--accent-deep); }
   --split: 53%;
   position: relative;
   width: 100%;
-  aspect-ratio: 675 / 900;
+  aspect-ratio: 2752 / 1536;
   overflow: hidden;
   touch-action: pan-y;
 }
@@ -690,6 +688,8 @@ a:hover { color: var(--accent-deep); }
   font-size: clamp(52px, 6.4vw, 92px);
   line-height: 1;
   letter-spacing: -0.01em;
+  /* Tabular figures so a counting number does not jitter its own width. */
+  font-variant-numeric: tabular-nums;
 }
 .stat__n em { font-style: italic; font-size: 0.38em; color: var(--accent); }
 .stat__l {
@@ -801,9 +801,7 @@ a:hover { color: var(--accent-deep); }
 @media (max-width: 1080px) {
   .hero__in,
   .ba__in,
-  .ba__in > .ba { order: 2; }
   .hero__fig { max-width: 560px; }
-  .ba { max-width: 560px; }
 }
 
 @media (max-width: 900px) {
@@ -868,6 +866,12 @@ a:hover { color: var(--accent-deep); }
     cursor: pointer;
   }
   .nav .btn { display: none; }
+  /* Full-screen sections come down a notch on a phone. Cover scales a
+     landscape frame by the box's HEIGHT here, so every extra vh of section
+     costs source width, and the portrait crops only have so much of it. */
+  .hero { min-height: 88svh; }
+  .seasons { min-height: 82svh; }
+  .closing { min-height: 80svh; }
   /* This override was written for the old bottom-left copy block and left the
      middle of the frame bare. The column is centred now, and on a narrow
      screen the crop is tighter and brighter, so the centre wash has to be
