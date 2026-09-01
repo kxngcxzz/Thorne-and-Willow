@@ -680,9 +680,8 @@ a:hover { color: var(--accent-deep); }
   .closing__in { grid-template-columns: minmax(0, 1fr); }
   /* Capped so cover never enlarges the plate. Between 664 and 1080 that
      leaves a margin either side, which reads as a framed plate rather than a
-     stretched band. The 1440 file covers this at 2x with room to spare, which
-     the old 1328 one did not: the desktop grid hands the figure 664.5px, and
-     1328 was a pixel short of covering it. */
+     stretched band. Above 1080 the plate is not inside the wrap -- it tracks
+     46vw -- which is why its sizes hint says 46vw rather than a fixed width. */
   .closing__fig { min-height: 300px; order: 2; width: 100%; max-width: 664px; margin-inline: auto; }
 }
 

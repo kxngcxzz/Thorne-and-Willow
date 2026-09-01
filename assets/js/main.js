@@ -162,7 +162,33 @@
     var shots = Array.prototype.slice.call(fig.querySelectorAll("img"));
     var tabs = Array.prototype.slice.call(pick.querySelectorAll("button"));
 
+    /* Three of the four seasons are never on screen until a tab is clicked,
+       so their markup ships with data-srcset and no src and nothing downloads
+       for them. At the top rung that is 2.2MB kept off the initial load.
+
+       Sources have to be filled before the img src or the browser can commit
+       to the fallback jpg before it has seen the webp. */
+    var hydrate = function (img) {
+      if (!img || img.getAttribute("data-ready")) return;
+      var pic = img.parentNode;
+      Array.prototype.forEach.call(pic.querySelectorAll("source[data-srcset]"), function (src) {
+        src.setAttribute("srcset", src.getAttribute("data-srcset"));
+        src.removeAttribute("data-srcset");
+      });
+      var src = img.getAttribute("data-src");
+      if (src) { img.setAttribute("src", src); img.removeAttribute("data-src"); }
+      img.setAttribute("data-ready", "true");
+    };
+
+    var forSeason = function (season) {
+      for (var i = 0; i < shots.length; i++) {
+        if (shots[i].getAttribute("data-season") === season) return shots[i];
+      }
+      return null;
+    };
+
     var show = function (season) {
+      hydrate(forSeason(season));
       shots.forEach(function (img) {
         if (img.getAttribute("data-season") === season) { img.setAttribute("data-on", "true"); }
         else { img.removeAttribute("data-on"); }
@@ -178,6 +204,18 @@
       var btn = e.target.closest("button[data-season]");
       if (btn) show(btn.getAttribute("data-season"));
     });
+
+    /* Once the page has gone quiet, pull the other three in the background so
+       the first tab click does not sit on a blank. Skipped on save-data and on
+       a slow connection, where the click-time fetch is the kinder default. */
+    var conn = navigator.connection;
+    var thrifty = conn && (conn.saveData ||
+      /(^|-)2g$/.test(conn.effectiveType || ""));
+    if (!thrifty) {
+      var warm = function () { shots.forEach(hydrate); };
+      if (window.requestIdleCallback) { requestIdleCallback(warm, { timeout: 6000 }); }
+      else { window.setTimeout(warm, 2500); }
+    }
 
     pick.addEventListener("keydown", function (e) {
       var i = tabs.indexOf(document.activeElement);
