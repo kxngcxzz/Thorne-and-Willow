@@ -236,52 +236,114 @@ a:hover { color: var(--accent-deep); }
    -------------------------------------------------------------------------- */
 .hero {
   position: relative;
-  min-height: min(88vh, 760px);
+  /* Full screen, the way the reference does it. svh rather than vh so a phone
+     does not hide the bottom of it behind the browser chrome. */
+  min-height: 100svh;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   overflow: hidden;
   background: var(--ink);
 }
 
-.hero__video {
+.hero__img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* The poster paints here until the video is asked for. */
-  background: var(--ink) center/cover no-repeat;
+  z-index: 0;
 }
 
-/* Weighted to the bottom left, where the headline sits, and kept off the
-   sky so the top of the frame stays open. */
+/* The copy is centred now, so the old bottom-left weighting no longer lines
+   up with anything. An even wash plus the bar band is what a centred block
+   over a full-screen frame needs. */
 .hero__scrim {
   position: absolute;
   inset: 0;
+  z-index: 1;
   background:
     /* Top band. The bar sits over open sky, the brightest thing in the frame,
        so it gets its own cover. Measured in pixels rather than percent: the
        bar is a fixed height, so a percentage band thinned out on short
        viewports exactly where the video crop was tightest and brightest. */
-    linear-gradient(to bottom, rgba(20, 24, 17, 0.76) 0px, rgba(20, 24, 17, 0.46) 66px, rgba(20, 24, 17, 0) 168px),
-    /* Bottom band, under the headline block. */
-    linear-gradient(to top, rgba(20, 24, 17, 0.84) 0%, rgba(20, 24, 17, 0.38) 40%, rgba(20, 24, 17, 0) 70%),
-    /* Left band, so the copy column keeps its footing even when the right of
-       the frame is doing the work. */
-    linear-gradient(to right, rgba(20, 24, 17, 0.54) 0%, rgba(20, 24, 17, 0.14) 48%, rgba(20, 24, 17, 0) 74%);
+    linear-gradient(to bottom, rgba(20, 24, 17, 0.72) 0px, rgba(20, 24, 17, 0.42) 66px, rgba(20, 24, 17, 0) 190px),
+    /* Centre wash, heaviest where the copy column sits. */
+    radial-gradient(ellipse 70% 60% at 50% 52%, rgba(20, 24, 17, 0.62) 0%, rgba(20, 24, 17, 0.34) 55%, rgba(20, 24, 17, 0.12) 100%),
+    /* Floor, so the bottom edge does not end on bright grass. */
+    linear-gradient(to top, rgba(20, 24, 17, 0.6) 0%, rgba(20, 24, 17, 0.14) 26%, rgba(20, 24, 17, 0) 46%);
 }
 
 .hero__in {
   position: relative;
-  padding-top: clamp(96px, 18vh, 200px);
+  z-index: 2;
+  width: 100%;
+  padding-top: clamp(96px, 14vh, 160px);
   padding-bottom: clamp(48px, 8vh, 88px);
 }
 
-.hero__copy { display: flex; flex-direction: column; gap: 26px; max-width: 34rem; }
-.hero h1 { font-size: var(--s4); color: #f6f7f2; }
-.hero .lede { color: rgba(242, 243, 238, 0.94); max-width: 27rem; }
-.hero .rule-note { color: rgba(242, 243, 238, 0.76); }
-.hero .rule-note::before { background: rgba(242, 243, 238, 0.5); }
+/* Centred, like the reference. The copy is a column down the middle of the
+   frame rather than a block in the bottom left. */
+.hero__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 28px;
+  max-width: 58rem;
+  margin-inline: auto;
+}
+
+/* Small caps with a rule either side. */
+.hero__kicker {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  font-size: var(--s-2);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(242, 243, 238, 0.9);
+}
+.hero__kicker::before,
+.hero__kicker::after {
+  content: "";
+  width: clamp(28px, 6vw, 72px);
+  height: 1px;
+  background: rgba(242, 243, 238, 0.45);
+}
+
+.hero h1 { font-size: var(--s5); color: #f6f7f2; }
+.hero .lede { color: rgba(242, 243, 238, 0.94); max-width: 34rem; }
+
+/* Three facts under the headline, in the reference's translucent slabs. */
+.hero__stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 10px;
+}
+.hero__stats > div {
+  min-width: 148px;
+  padding: 16px 24px 14px;
+  background: rgba(20, 24, 17, 0.42);
+  border: 1px solid rgba(242, 243, 238, 0.18);
+  backdrop-filter: blur(3px);
+}
+.hero__stats dd {
+  font-family: var(--display);
+  font-size: var(--s2);
+  line-height: 1;
+  color: #f6f7f2;
+}
+.hero__stats dd span { font-size: 0.62em; font-style: italic; margin-left: 0.12em; }
+.hero__stats dt {
+  margin-top: 8px;
+  font-size: var(--s-2);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(242, 243, 238, 0.72);
+}
 
 /* --------------------------------------------------------------------------
    6. Section furniture
@@ -747,10 +809,15 @@ a:hover { color: var(--accent-deep); }
     cursor: pointer;
   }
   .nav .btn { display: none; }
+  /* This override was written for the old bottom-left copy block and left the
+     middle of the frame bare. The column is centred now, and on a narrow
+     screen the crop is tighter and brighter, so the centre wash has to be
+     wider than the desktop ellipse and reach the full width. */
   .hero__scrim {
     background:
-      linear-gradient(to bottom, rgba(20, 24, 17, 0.84) 0px, rgba(20, 24, 17, 0.58) 72px, rgba(20, 24, 17, 0) 190px),
-      linear-gradient(to top, rgba(20, 24, 17, 0.86) 0%, rgba(20, 24, 17, 0.46) 46%, rgba(20, 24, 17, 0) 76%);
+      linear-gradient(to bottom, rgba(20, 24, 17, 0.84) 0px, rgba(20, 24, 17, 0.58) 72px, rgba(20, 24, 17, 0.12) 190px),
+      radial-gradient(ellipse 135% 62% at 50% 50%, rgba(20, 24, 17, 0.7) 0%, rgba(20, 24, 17, 0.5) 60%, rgba(20, 24, 17, 0.24) 100%),
+      linear-gradient(to top, rgba(20, 24, 17, 0.6) 0%, rgba(20, 24, 17, 0.2) 30%, rgba(20, 24, 17, 0) 55%);
   }
   .foot__in { flex-direction: column; align-items: flex-start; }
   /* Touch targets. On a pointer 20px is fine; on a thumb it is not. */

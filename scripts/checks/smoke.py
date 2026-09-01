@@ -44,10 +44,18 @@ with sync_playwright() as pw:
     # interactions
     p = b.new_page(viewport={"width":1440,"height":900}, device_scale_factor=1)
     p.goto(URL, wait_until="load"); p.wait_for_timeout(2000)
-    v = p.evaluate("""() => { const v=document.getElementById('heroVideo');
-        return {ready:v.readyState, playing:!v.paused, muted:v.muted, loop:v.loop}; }""")
-    if v["ready"] < 3 or not v["playing"] or not v["muted"] or not v["loop"]:
-        fails.append(f"hero video state {v}")
+    # The hero is a still now. What matters is that it is eager, not lazy:
+    # it is the largest paint on the page and must not wait on the scroller.
+    h = p.evaluate("""() => { const i = document.querySelector('.hero__img');
+        if (!i) return null;
+        return {complete: i.complete, w: i.naturalWidth,
+                lazy: i.loading === 'lazy', priority: i.fetchPriority}; }""")
+    if not h:
+        fails.append("no .hero__img on the page")
+    elif not h["complete"] or h["w"] < 1:
+        fails.append(f"hero still did not load: {h}")
+    elif h["lazy"]:
+        fails.append("hero still is loading=lazy; it is the largest paint")
 
     p.evaluate("() => document.getElementById('gardens').scrollIntoView()"); p.wait_for_timeout(900)
     before = p.evaluate("() => document.querySelectorAll('.craft')[1].getBoundingClientRect().width")

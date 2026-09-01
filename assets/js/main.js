@@ -229,44 +229,6 @@
     });
   }
 
-  /* ---- Hero video --------------------------------------------------------
-     The markup carries no sources and no autoplay, so nothing downloads until
-     this decides it should. Reduced-motion and save-data visitors keep the
-     poster and pay nothing for it. The file is a ping-pong (forward then the
-     same footage reversed), so the native loop has no visible cut. */
-  var hero = document.getElementById("heroVideo");
-  if (hero) {
-    var saveData = navigator.connection && navigator.connection.saveData;
-    if (!reduced && !saveData) {
-      var small = window.matchMedia("(max-width: 700px)").matches;
-      var stem = small ? "hero-960" : "hero-1440";
-      [["webm", "video/webm"], ["mp4", "video/mp4"]].forEach(function (pair) {
-        var src = document.createElement("source");
-        src.src = "assets/video/" + stem + "." + pair[0];
-        src.type = pair[1];
-        hero.appendChild(src);
-      });
-      hero.load();
-      var play = function () {
-        var p = hero.play();
-        // Autoplay can still be refused. The poster stays, which is the
-        // same thing a reduced-motion visitor sees, so there is nothing to fix.
-        if (p && p.catch) p.catch(function () {});
-      };
-      if (hero.readyState >= 2) play();
-      else hero.addEventListener("loadeddata", play, { once: true });
-
-      // Stop paying for decode while the hero is off screen.
-      if ("IntersectionObserver" in window) {
-        new IntersectionObserver(function (entries) {
-          entries.forEach(function (e) {
-            if (e.isIntersecting) play(); else hero.pause();
-          });
-        }, { threshold: 0.1 }).observe(hero);
-      }
-    }
-  }
-
   /* ---- Process stem ------------------------------------------------------
      The dash length has to be measured, not guessed, or the line either
      snaps in early or never finishes. */

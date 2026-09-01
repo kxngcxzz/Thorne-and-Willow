@@ -86,7 +86,9 @@ def measure(page, sel, dpr, idx=0):
 TARGETS = [
     ("hero headline",  ".hero h1",           0, 3.0, None),
     ("hero body",      ".hero .lede",        0, 4.5, None),
-    ("hero rule note", ".hero .rule-note",   0, 4.5, None),
+    ("hero kicker",    ".hero__kicker",      0, 4.5, None),
+    ("hero stat",      ".hero__stats dd",    0, 3.0, None),
+    ("hero stat label", ".hero__stats dt",   0, 4.5, None),
     ("wordmark",       ".nav .mark",         0, 4.5, None),
     ("nav link",       ".nav__links a",      0, 4.5, None),
     ("menu button",    ".nav__toggle",       0, 4.5, None),

@@ -96,17 +96,28 @@
 
   <!-- Hero ---------------------------------------------------------------- -->
   <section class="hero" id="top">
-    <!-- The poster is a frame from the video itself, so there is no jump when
-         it starts. No autoplay attribute: main.js decides whether to load at
-         all, which keeps the download off reduced-motion and no-JS visitors. -->
-    <video class="hero__video" id="heroVideo" poster="assets/video/hero-poster.jpg"
-           muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
+    <!-- A still, not a loop. The first thing on the page is also the biggest
+         download, so this one is eager and high priority: everything else on
+         the page is lazy and can wait its turn. -->
+    <picture>
+      <source type="image/webp" sizes="100vw"
+              srcset="assets/img/hero-garden-960.webp 960w, assets/img/hero-garden-1440.webp 1440w, assets/img/hero-garden-1920.webp 1920w">
+      <source type="image/jpeg" sizes="100vw"
+              srcset="assets/img/hero-garden-960.jpg 960w, assets/img/hero-garden-1440.jpg 1440w, assets/img/hero-garden-1920.jpg 1920w">
+      <img class="hero__img" src="assets/img/hero-garden-1440.jpg" width="1920" height="1080"
+           fetchpriority="high" decoding="async" alt="">
+    </picture>
     <div class="hero__scrim"></div>
     <div class="wrap hero__in">
       <div class="hero__copy">
+        <p class="hero__kicker">Landscape gardeners — Surrey &amp; West Sussex</p>
         <h1 class="d">we plant for the<br><em>tenth year.</em></h1>
-        <p class="lede">Design, build and planting for gardens across Surrey and West Sussex. Made to look right the year it grows in.</p>
-        <p class="rule-note">Landscape gardeners since 2009</p>
+        <p class="lede">Design, build and planting for gardens made to look right the year they grow in.</p>
+        <dl class="hero__stats">
+          <div><dd>est.<span>2009</span></dd><dt>seventeen years of it</dt></div>
+          <div><dd>412</dd><dt>gardens built</dt></div>
+          <div><dd>94<span>%</span></dd><dt>have us back</dt></div>
+        </dl>
       </div>
     </div>
   </section>
