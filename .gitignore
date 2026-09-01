@@ -1,0 +1,5 @@
+
+# Image masters. The site serves the webp and jpg derivatives; the 2K
+# sources stay in the Higgsfield gallery and PROMPTS.md records how to
+# regenerate them. Keeping them here just triples the size of the repo.
+assets/img/*.png
