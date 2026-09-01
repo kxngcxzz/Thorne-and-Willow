@@ -334,14 +334,21 @@ a:hover { color: var(--accent-deep); }
   width: 100%;
   height: 100%;
   object-fit: cover;
+  z-index: 0;
 }
 /* The photographs run bright at the bottom (gravel, lit paving), so the
    scrim ramps earlier and lands darker than it looks like it needs to.
-   Measured, not eyeballed: body copy clears 4.5:1 over every panel. */
+
+   The z-index is load-bearing. ::after is generated as the last child, so
+   with everything on auto the scrim painted over the label and the body
+   copy rather than under them, dragging near-white text down to about
+   1.6:1 against its own backdrop. The three layers are ordered explicitly
+   now: photograph, scrim, words. */
 .craft::after {
   content: "";
   position: absolute;
   inset: 0;
+  z-index: 1;
   background: linear-gradient(180deg,
     rgba(20, 24, 17, 0) 28%,
     rgba(20, 24, 17, 0.58) 60%,
@@ -356,6 +363,7 @@ a:hover { color: var(--accent-deep); }
 
 .craft__label {
   position: absolute;
+  z-index: 2;
   left: 50%;
   bottom: 34px;
   transform: translateX(-50%) rotate(180deg);
@@ -370,6 +378,7 @@ a:hover { color: var(--accent-deep); }
 
 .craft__body {
   position: absolute;
+  z-index: 2;
   left: 0;
   bottom: 0;
   width: min(520px, 88%);
