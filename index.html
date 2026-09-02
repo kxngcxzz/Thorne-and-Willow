@@ -74,6 +74,63 @@
   }
 }
 </script>
+<!-- Questions, mirrored from the visible markup so the two cannot drift. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What does a garden like this actually cost?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Most whole-garden projects we take on land between £18,000 and £70,000, and the spread is mostly hard landscaping: steps, walls and levels are what move a price, not plants. You get a fixed figure within a week of the first walk, itemised, with nothing hidden in a provisional sum."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How long does it take?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Two to three weeks of drawing, then three to eight weeks on site for a typical rear garden. We book one project at a time, so the dates we give you are dates we can keep rather than a slot we hope to reach."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do you do the work yourselves?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. The people who quote it are the people who build it. We bring in a specialist for structural work and mains electrics, and you will be told who and why before they arrive — but there is no subcontracted crew you have never met turning up on the first morning."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens if the planting fails?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We replace it. Everything we plant is covered for the first full growing season, and we are back through that year anyway to feed and shape it. Plants sulk after a move; that is normal and it is our problem, not yours."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will we need planning permission?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Usually not. Decking over 300mm, structures near a boundary, and anything at the front of a listed or conservation-area property are the common exceptions. We tell you at the first walk if we think you need it, and we would rather lose the job than build something that has to come down."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "When is the best time to start?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Hard landscaping runs all year. Planting goes in best between October and March, when everything is dormant and establishes over winter. Book a walk in autumn and you are usually eating outside by the following summer."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -339,6 +396,52 @@
           </article>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- Questions ------------------------------------------------------------
+       <details> rather than a scripted accordion: it opens with the keyboard,
+       it is announced correctly, and it works with JavaScript off, which a
+       div-and-click-handler version does not. -->
+  <section class="section faq" id="questions">
+    <div class="wrap">
+      <h2 class="d rise" style="font-size: var(--s3); max-width: 18ch; margin-bottom: clamp(32px, 4vw, 52px);">
+        what people ask <em>before they ring.</em>
+      </h2>
+
+      <div class="faq__list rise">
+        <details class="qa">
+          <summary>What does a garden like this actually cost?</summary>
+          <p>Most whole-garden projects we take on land between &pound;18,000 and &pound;70,000, and the spread is mostly hard landscaping: steps, walls and levels are what move a price, not plants. You get a fixed figure within a week of the first walk, itemised, with nothing hidden in a provisional sum.</p>
+        </details>
+        <details class="qa">
+          <summary>How long does it take?</summary>
+          <p>Two to three weeks of drawing, then three to eight weeks on site for a typical rear garden. We book one project at a time, so the dates we give you are dates we can keep rather than a slot we hope to reach.</p>
+        </details>
+        <details class="qa">
+          <summary>Do you do the work yourselves?</summary>
+          <p>Yes. The people who quote it are the people who build it. We bring in a specialist for structural work and mains electrics, and you will be told who and why before they arrive &mdash; but there is no subcontracted crew you have never met turning up on the first morning.</p>
+        </details>
+        <details class="qa">
+          <summary>What happens if the planting fails?</summary>
+          <p>We replace it. Everything we plant is covered for the first full growing season, and we are back through that year anyway to feed and shape it. Plants sulk after a move; that is normal and it is our problem, not yours.</p>
+        </details>
+        <details class="qa">
+          <summary>Will we need planning permission?</summary>
+          <p>Usually not. Decking over 300mm, structures near a boundary, and anything at the front of a listed or conservation-area property are the common exceptions. We tell you at the first walk if we think you need it, and we would rather lose the job than build something that has to come down.</p>
+        </details>
+        <details class="qa">
+          <summary>When is the best time to start?</summary>
+          <p>Hard landscaping runs all year. Planting goes in best between October and March, when everything is dormant and establishes over winter. Book a walk in autumn and you are usually eating outside by the following summer.</p>
+        </details>
+      </div>
+
+      <ul class="trust rise" aria-label="Cover and guarantees">
+        <li><b>&pound;5m</b> public liability cover</li>
+        <li><b>5 year</b> guarantee on hard landscaping</li>
+        <li><b>One season</b> replacement on planting</li>
+        <li><b>Licensed</b> waste carrier, everything ticketed</li>
+      </ul>
     </div>
   </section>
 

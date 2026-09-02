@@ -646,6 +646,83 @@ a:hover { color: var(--accent-deep); }
 .seasons__pick button[aria-selected="true"] { color: #f5f6f1; border-bottom-color: #f5f6f1; }
 
 /* --------------------------------------------------------------------------
+   9b. Questions. Native <details>, so it works with the keyboard, with a
+   screen reader and with JavaScript off. The marker is drawn with a
+   pseudo-element because the default triangle cannot be styled reliably.
+   -------------------------------------------------------------------------- */
+.faq__list { border-top: 1px solid var(--rule); max-width: 62rem; }
+
+.qa { border-bottom: 1px solid var(--rule); }
+.qa summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+  padding: 22px 0;
+  /* The body face, not the display serif. These are questions you read, not
+     a heading you look at, and at 17-19px the serif's strokes are thin enough
+     that on a 1x screen no pixel renders fully opaque -- measured, that put a
+     colour whose swatch says 7.7:1 on the page at 2.9:1. The rule the rest of
+     the site follows: serif for display sizes, sans for anything you read. */
+  font-family: var(--body);
+  font-size: var(--s1);
+  font-weight: 500;
+  color: var(--ink);
+  transition: color 0.2s var(--ease);
+}
+.qa summary::-webkit-details-marker { display: none; }
+.qa summary:hover { color: var(--accent-deep); }
+.qa summary:focus-visible { outline: 2px solid var(--accent-deep); outline-offset: 4px; }
+
+/* The marker sits last so the question reads first, and rotates on open. */
+.qa summary::after {
+  content: "";
+  flex: 0 0 11px;
+  height: 11px;
+  margin-left: auto;
+  border-right: 1.5px solid var(--ink-quiet);
+  border-bottom: 1.5px solid var(--ink-quiet);
+  transform: rotate(45deg) translateY(-2px);
+  transition: transform 0.25s var(--ease);
+}
+.qa[open] summary::after { transform: rotate(225deg) translateY(-2px); }
+.qa[open] summary { color: var(--accent-deep); }
+
+.qa p {
+  margin: 0;
+  padding: 0 0 26px;
+  max-width: 46rem;
+  color: var(--ink-soft);
+  line-height: 1.75;
+}
+
+/* Cover and guarantees. Four short facts, not a badge wall. */
+.trust {
+  list-style: none;
+  margin: clamp(36px, 5vw, 56px) 0 0;
+  padding: 26px 0 0;
+  border-top: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px 36px;
+}
+.trust li {
+  font-size: var(--s-1);
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+.trust b {
+  display: block;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: var(--s2);
+  line-height: 1.05;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+/* --------------------------------------------------------------------------
    10. Process. The stem draws itself as the section arrives.
    -------------------------------------------------------------------------- */
 .process__grid { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: clamp(24px, 4vw, 48px); }

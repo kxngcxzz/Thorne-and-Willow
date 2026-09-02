@@ -102,6 +102,10 @@ TARGETS = [
     ("closing head",   ".closing__card h2",  0, 3.0, "closing"),
     ("closing body",   ".closing__card p",   0, 4.5, "closing"),
     ("closing eyebrow", ".closing__card .eyebrow", 0, 4.5, "closing"),
+    ("faq question",   ".qa summary",        0, 4.5, "faq"),
+    ("faq answer",     ".qa[open] p",        0, 4.5, "faq"),
+    ("trust figure",   ".trust b",           0, 3.0, "faq"),
+    ("trust label",    ".trust li",          0, 4.5, "faq"),
 ]
 
 VIEWS = [("desktop", 1450, 800, 1), ("desktop 2x", 1440, 900, 2),
@@ -128,6 +132,10 @@ with sync_playwright() as pw:
                         pass
             elif where == "seasons":
                 p.evaluate("() => document.getElementById('seasons').scrollIntoView()")
+                settle(p)
+            elif where == "faq":
+                p.evaluate("""() => { document.getElementById('questions').scrollIntoView();
+                    document.querySelector('.qa').open = true; }""")
                 settle(p)
             elif where == "closing":
                 p.evaluate("() => document.getElementById('book').scrollIntoView()")
